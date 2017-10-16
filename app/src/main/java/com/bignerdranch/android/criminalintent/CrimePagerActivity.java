@@ -17,6 +17,8 @@ import android.util.Log;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import android.widget.Button;
+import android.view.View;
 
 /**
  * Created by derrek1 on 10/11/17.
@@ -37,6 +39,8 @@ public class CrimePagerActivity extends AppCompatActivity{
     private List<Crime> mCrimes;
     private Set<Integer> visitedPages = new ArraySet<>();
     private int position;
+    private Button mFirstButton;
+    private Button mLastButton;
 
     public static Intent newIntent(Context packageContext, UUID crimeID, int position){
         Intent intent = new Intent(packageContext, CrimePagerActivity.class);
@@ -77,6 +81,49 @@ public class CrimePagerActivity extends AppCompatActivity{
             }
         });
         mViewPager.setCurrentItem(position);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                if (mViewPager.getCurrentItem() == 0) {
+                    mFirstButton.setVisibility(View.INVISIBLE);
+                } else {
+                    mFirstButton.setVisibility(View.VISIBLE);
+                }
+
+                if (mViewPager.getCurrentItem() == mViewPager.getAdapter().getCount() - 1) {
+                    mLastButton.setVisibility(View.INVISIBLE);
+                } else {
+                    mLastButton.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        mFirstButton = (Button) findViewById(R.id.first_crime);
+        mFirstButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mViewPager.setCurrentItem(0);
+            }
+        });
+
+        mLastButton = (Button) findViewById(R.id.last_crime);
+        mLastButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mViewPager.setCurrentItem(mViewPager.getAdapter().getCount() - 1);
+            }
+        });
+
 
 
     }
@@ -105,4 +152,6 @@ public class CrimePagerActivity extends AppCompatActivity{
         }
         return a;
     }
+
+
 }
