@@ -9,12 +9,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.util.ArraySet;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -23,6 +24,10 @@ import java.util.UUID;
 
 public class CrimePagerActivity extends AppCompatActivity{
 
+    private static final String TAG = "CrimePagerActivity";
+
+    private static final String POSITION_ARRAY_EXTRA = "com.bignerdranch.android.criminalintent.position_array";
+
     private static final String EXTRA_CRIME_ID =
             "com.bignerdranch.android.criminalintent.crime_id";
     private static final String POSITION_EXTRA=
@@ -30,7 +35,7 @@ public class CrimePagerActivity extends AppCompatActivity{
 
     private ViewPager mViewPager;
     private List<Crime> mCrimes;
-
+    private Set<Integer> visitedPages = new ArraySet<>();
     private int position;
 
     public static Intent newIntent(Context packageContext, UUID crimeID, int position){
@@ -50,7 +55,6 @@ public class CrimePagerActivity extends AppCompatActivity{
                 .getSerializableExtra(EXTRA_CRIME_ID);
 
         position = getIntent().getIntExtra(POSITION_EXTRA, -1);
-
         mViewPager = (ViewPager) findViewById(R.id.crime_view_pager);
 
         mCrimes = CrimeLab.get(this).getCrimes();
@@ -62,6 +66,8 @@ public class CrimePagerActivity extends AppCompatActivity{
                 Log.d("position", "" + position);
                 Log.d("current page", "" + mViewPager.getCurrentItem());
                 Crime crime = mCrimes.get(position);
+                visitedPages.add(position);
+                Log.d(TAG, "Integer added to set: " + position);
                 return CrimeFragment.newInstance(crime.getId());
             }
 
@@ -72,15 +78,31 @@ public class CrimePagerActivity extends AppCompatActivity{
         });
         mViewPager.setCurrentItem(position);
 
+
     }
     public void returnResult(){ // fix this once extra for position is passed
         Intent intent = new Intent(); //blank intent
-        intent.putExtra(POSITION_EXTRA, position); //put info in intent
+        int positionArray[];
+         positionArray = toInt(visitedPages);
+        for (int i=0; i<positionArray.length; i++){
+            Log.d(TAG, "value in array at "+i+" = "+positionArray[i]);
+        }
+        intent.putExtra(POSITION_ARRAY_EXTRA, positionArray); //put info in intent
         setResult(Activity.RESULT_OK, intent); // pass intent w info with the result to crimelistfragment
     }
    @Override
     public void onBackPressed() {
         returnResult();
         super.onBackPressed();
+    }
+    public int[] toInt(Set<Integer> set) { //working i guess
+        Integer[] b = set.toArray(new Integer[set.size()]);
+      //  Log.d(TAG, "value of first b array spot is: " + b[0]);
+        int a[] = new int[b.length];
+        for(int i = 0; i<b.length;i++){
+            a[i] = b[i];
+          //  Log.d(TAG, "added value to i=" +a[i]);
+        }
+        return a;
     }
 }

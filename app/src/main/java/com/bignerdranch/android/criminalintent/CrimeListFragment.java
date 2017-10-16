@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,6 +23,8 @@ import java.util.List;
  */
 
 public class CrimeListFragment extends Fragment {
+
+    private static final String POSITION_ARRAY_EXTRA = "com.bignerdranch.android.criminalintent.position_array";
 
     private static final String POSITION_EXTRA =
             "com.bignerdranch.android.criminalintent.crime_position";
@@ -101,9 +104,10 @@ private CrimeAdapter mAdapter;
     }
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data){ //happens when result is retrieved
     if (requestCode == REQUEST_CRIME){
-        int position = data.getIntExtra(POSITION_EXTRA, -1); //position comes back from the data passed by result of crimefragment
-        Log.d(TAG, "Position Updated: " + position);
-        mAdapter.notifyItemChanged(position);
+        int[] positionArray;
+        positionArray = data.getIntArrayExtra(POSITION_ARRAY_EXTRA); //position comes back from the data passed by result of crimefragment
+       //currently null array
+        mAdapter.notifyItemRangeChanged(positionArray[0], positionArray.length);
     }
     }
     private class CrimeAdapter extends RecyclerView.Adapter<CrimeHolder>{
