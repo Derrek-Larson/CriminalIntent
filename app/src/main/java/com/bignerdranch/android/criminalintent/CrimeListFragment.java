@@ -95,7 +95,7 @@ private CrimeAdapter mAdapter;
             mDateTextView.setText(shortScopeDateCharS);
             //mDateTextView.setText(mCrime.getDate().toString());
             mSolvedImageView.setVisibility(crime.isSolved() ? View.VISIBLE :View.GONE);
-            mPoliceTextView.setVisibility(crime.isSolved() ? View.VISIBLE : View.GONE);
+            mPoliceTextView.setVisibility(crime.getMrequiresPolice() ? View.VISIBLE : View.GONE);
             this.position = position;
 
             //}

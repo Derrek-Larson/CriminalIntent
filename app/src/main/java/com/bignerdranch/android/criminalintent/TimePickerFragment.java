@@ -9,12 +9,11 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.TimePicker;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+
 
 /**
  * Created by derrek1 on 10/17/17.
@@ -47,16 +46,16 @@ public class TimePickerFragment extends DialogFragment {
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener(){
                     @Override
                     public void onClick(DialogInterface dialog, int which){
-                        Date date1 = (Date) getArguments().getSerializable(ARG_DATE);
+                        Date date1 = (Date) getArguments().getSerializable(ARG_DATE); // instance date of current date
                         mCalendar = Calendar.getInstance();
-                        mCalendar.setTime(date1);
+                        mCalendar.setTime(date1); // calendar of current date
                         int year = mCalendar.get(Calendar.YEAR);
                         int month = mCalendar.get(Calendar.MONTH);
-                        int day = mCalendar.get(Calendar.DAY_OF_MONTH);
+                        int day = mCalendar.get(Calendar.DAY_OF_MONTH); // extracting current date values
                         int hour = mTimePicker.getCurrentHour();
-                        int minute = mTimePicker.getCurrentMinute();
-                        Date date = new GregorianCalendar(year,month, day,hour,minute).getTime();
-                        sendResult(Activity.RESULT_OK, date);
+                        int minute = mTimePicker.getCurrentMinute(); // extract current selected time values
+                        Date date = new GregorianCalendar(year,month, day,hour,minute).getTime(); //put em together
+                        sendResult(Activity.RESULT_OK, date); //send it off to method sendResult
                     }
                 })
                 .create();
@@ -69,7 +68,6 @@ public class TimePickerFragment extends DialogFragment {
         }
         Intent intent = new Intent();
         intent.putExtra(EXTRA_TIME,date);
-
         getTargetFragment()
                 .onActivityResult(getTargetRequestCode(), resultCode, intent);
     }

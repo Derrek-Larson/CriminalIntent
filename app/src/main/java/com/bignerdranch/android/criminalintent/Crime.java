@@ -11,6 +11,7 @@ public class Crime {
     private Date mDate;
     private Boolean mSolved;
     private Boolean mRequiresPolice = false;
+    private String mTime;
     public Boolean getMrequiresPolice() {
         return mRequiresPolice;
     }
@@ -51,5 +52,9 @@ public class Crime {
 
     public void setSolved(Boolean solved) {
         mSolved = solved;
+    }
+
+    public void setTime(String time){
+        mTime = time;
     }
 }

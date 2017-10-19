@@ -131,9 +131,9 @@ public class CrimePagerActivity extends AppCompatActivity{
         Intent intent = new Intent(); //blank intent
         int positionArray[];
          positionArray = toInt(visitedPages);
-        for (int i=0; i<positionArray.length; i++){
-            Log.d(TAG, "value in array at "+i+" = "+positionArray[i]);
-        }
+       // for (int i=0; i<positionArray.length; i++){ add for testing if needed
+          //  Log.d(TAG, "value in array at "+i+" = "+positionArray[i]);
+       // }
         intent.putExtra(POSITION_ARRAY_EXTRA, positionArray); //put info in intent
         setResult(Activity.RESULT_OK, intent); // pass intent w info with the result to crimelistfragment
     }
