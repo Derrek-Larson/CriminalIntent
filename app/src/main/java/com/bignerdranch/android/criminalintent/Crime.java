@@ -9,7 +9,7 @@ public class Crime {
     private UUID mId;
     private String mTitle;
     private Date mDate;
-    private Boolean mSolved;
+    private Boolean mSolved=false;
     private Boolean mRequiresPolice = false;
     private String mTime;
     public Boolean getMrequiresPolice() {

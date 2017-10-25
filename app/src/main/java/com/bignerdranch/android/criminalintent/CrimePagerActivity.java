@@ -20,6 +20,8 @@ import java.util.UUID;
 import android.widget.Button;
 import android.view.View;
 
+import static android.R.attr.id;
+
 /**
  * Created by derrek1 on 10/11/17.
  */
@@ -69,6 +71,13 @@ public class CrimePagerActivity extends AppCompatActivity{
             public Fragment getItem(int position) {
                 Log.d("position", "" + position);
                 Log.d("current page", "" + mViewPager.getCurrentItem());
+                //Crime cCrime;
+//                if (position==-1){cCrime = new Crime();
+//                    cCrime.setTitle("Crime Title");
+//                    cCrime.setMrequiresPolice(false);
+//                    cCrime.setSolved(false);
+//                    mCrimes.add(cCrime); return CrimeFragment.newInstance(cCrime.getId());
+//                }
                 Crime crime = mCrimes.get(position);
                 visitedPages.add(position);
                 Log.d(TAG, "Integer added to set: " + position);
@@ -131,9 +140,9 @@ public class CrimePagerActivity extends AppCompatActivity{
         Intent intent = new Intent(); //blank intent
         int positionArray[];
          positionArray = toInt(visitedPages);
-       // for (int i=0; i<positionArray.length; i++){ add for testing if needed
-          //  Log.d(TAG, "value in array at "+i+" = "+positionArray[i]);
-       // }
+       for (int i=0; i<positionArray.length; i++){ //add for testing if needed
+            Log.d(TAG, "value in array at "+i+" = "+positionArray[i]);
+        }
         intent.putExtra(POSITION_ARRAY_EXTRA, positionArray); //put info in intent
         setResult(Activity.RESULT_OK, intent); // pass intent w info with the result to crimelistfragment
     }
@@ -144,11 +153,11 @@ public class CrimePagerActivity extends AppCompatActivity{
     }
     public int[] toInt(Set<Integer> set) { //working i guess
         Integer[] b = set.toArray(new Integer[set.size()]);
-      //  Log.d(TAG, "value of first b array spot is: " + b[0]);
+        Log.d(TAG, "value of first b array spot is: " + b[0]);
         int a[] = new int[b.length];
         for(int i = 0; i<b.length;i++){
             a[i] = b[i];
-          //  Log.d(TAG, "added value to i=" +a[i]);
+            Log.d(TAG, "added value to i=" +a[i]);
         }
         return a;
     }

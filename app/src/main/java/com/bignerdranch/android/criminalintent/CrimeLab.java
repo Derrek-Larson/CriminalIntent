@@ -24,21 +24,19 @@ public class CrimeLab {
         }
         return sCrimeLab;
     }
+
     private CrimeLab(Context context){
         mCrimes = new LinkedHashMap<>();
-        for (int i=0; i<100; i++){
-            Crime crime = new Crime();
-            crime.setTitle("Crime #"+i);
-            crime.setSolved(i%2==0);
-            crime.setMrequiresPolice(i%2==0); // only needed for challenge of chapter 8
-            mCrimes.put(crime.getId(),crime);
-            Log.d(TAG, "crime created");
-
-        }
     }
+
+    public void addCrime(Crime c){
+        mCrimes.put(c.getId(),c);
+    }
+
     public List<Crime> getCrimes(){
         return new ArrayList<>(mCrimes.values());
     } //arraylist for all other purposes
+
     public Crime getCrime(UUID id){
         return mCrimes.get(id); //instant retrieval
     }
