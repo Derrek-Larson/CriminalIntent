@@ -175,17 +175,19 @@ private boolean mSubtitleVisible;
             //}
 
         }
-    }
-    @Override public void onActivityResult(int requestCode, int resultCode, Intent data){ //happens when result is retrieved
-    if (requestCode == REQUEST_CRIME){
-        int[] positionArray;
-        positionArray = data.getIntArrayExtra(POSITION_ARRAY_EXTRA); //position comes back from the data passed by result of crimefragment
-       //array confirmed to hold new value
-        Log.d(TAG, "positionArray length "+positionArray.length);
-        mAdapter.notifyItemRangeChanged(positionArray[0], positionArray.length);
-        updateUI();
-    }
-    }
+    } // DELETING THIS MADE IT WORK HAHAHHAHAHAHAHAHHAHA
+//    @Override public void onActivityResult(int requestCode, int resultCode, Intent data){ //happens when result is retrieved HAHA  DELETING THIS MAKES IT WORK SOMEHOW
+//    if (requestCode == REQUEST_CRIME){
+//        if(data.getIntArrayExtra(POSITION_ARRAY_EXTRA)!=null){
+//        int[] positionArray;
+//        positionArray = data.getIntArrayExtra(POSITION_ARRAY_EXTRA); //position comes back from the data passed by result of crimefragment
+//       //array confirmed to hold new value
+//        Log.d(TAG, "positionArray length "+positionArray.length);
+//        mAdapter.notifyItemRangeChanged(positionArray[0], positionArray.length);
+//        updateUI();}
+//        else{mAdapter.notifyDataSetChanged();}
+//    }
+   // }
     private class CrimeAdapter extends RecyclerView.Adapter<CrimeHolder>{
         private List<Crime> mCrimes;
 

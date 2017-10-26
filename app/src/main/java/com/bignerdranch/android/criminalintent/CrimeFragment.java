@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.CompoundButton;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -41,6 +44,9 @@ public class CrimeFragment extends Fragment {
     private CheckBox mSolvedCheckBox;
     private Button mTimeButton;
     private CheckBox mRequiresPoliceCBox;
+    Menu mMenu;
+    MenuInflater mMenuInflater;
+
 
     public static CrimeFragment newInstance(UUID crimeID){
         Bundle args = new Bundle();
@@ -55,8 +61,40 @@ public class CrimeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         UUID crimeId = (UUID) getArguments().getSerializable(ARG_CRIME_ID);
         mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
+        setHasOptionsMenu(true);
 
     }
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+
+        outState.putSerializable(ARG_CRIME_ID, mCrime.getId());
+
+        super.onSaveInstanceState(outState);
+    }
+
+    private void deleteCrime(){
+        CrimeLab.get(getActivity()).deleteCrime(mCrime.getId());
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.delete_crime_menu:
+                deleteCrime();
+                Log.d("CrimeFragment", "ActivityDeleted");
+                getActivity().finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater ) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_crime, menu);
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_crime, container, false);

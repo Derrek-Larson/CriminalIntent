@@ -32,6 +32,7 @@ public class CrimeLab {
     public void addCrime(Crime c){
         mCrimes.put(c.getId(),c);
     }
+    public void deleteCrime(UUID c){mCrimes.remove(c);}
 
     public List<Crime> getCrimes(){
         return new ArrayList<>(mCrimes.values());
@@ -41,3 +42,4 @@ public class CrimeLab {
         return mCrimes.get(id); //instant retrieval
     }
 }
+
