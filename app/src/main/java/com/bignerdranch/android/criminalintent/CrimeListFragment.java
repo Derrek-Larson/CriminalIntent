@@ -14,9 +14,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,6 +40,8 @@ public class CrimeListFragment extends Fragment {
 
 private RecyclerView mCrimeRecyclerView;
 private CrimeAdapter mAdapter;
+private Button mEmptyViewAddButton;
+    private View mEmptyView;
 private boolean mSubtitleVisible;
     private static final int REQUEST_CRIME = 1;
     @Override
@@ -46,18 +49,26 @@ private boolean mSubtitleVisible;
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_crime_list, container, false);
-        mCrimeRecyclerView = (RecyclerView) view
+        mCrimeRecyclerView= (RecyclerView) view
                 .findViewById(R.id.crime_recycler_view);
         mCrimeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        updateUI();
-        if (savedInstanceState != null){
-            mSubtitleVisible = savedInstanceState.getBoolean(SAVED_SUBTITLE_VISIBLE);
+        if (savedInstanceState!=null){
+            mSubtitleVisible=savedInstanceState.getBoolean(SAVED_SUBTITLE_VISIBLE);
         }
+        mEmptyViewAddButton = (Button) view.findViewById(R.id.empty_view_add_button);
+        mEmptyViewAddButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addACrime();
+            }
+        });
+        setEmptyView(mCrimeRecyclerView);
+        updateUI();
         return view;
     }
+
     @Override public void onResume(){
         super.onResume();
         updateUI();
@@ -75,7 +86,16 @@ private boolean mSubtitleVisible;
         Intent intent = CrimePagerActivity.newIntent(getActivity(), crime.getId(),mAdapter.getItemCount() );
         startActivity(intent);
     }
-
+    private void updateEmptyView() {
+        if (mEmptyView != null && mCrimeRecyclerView.getAdapter() != null) {
+            boolean showEmptyView = mCrimeRecyclerView.getAdapter().getItemCount() == 0;
+            mEmptyView.setVisibility(showEmptyView ? View.VISIBLE : View.GONE);
+            mCrimeRecyclerView.setVisibility(showEmptyView ? View.GONE : View.VISIBLE);
+        }
+    }
+    public void setEmptyView(View emptyView) {
+        mEmptyView = emptyView;
+    }
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
         super.onCreateOptionsMenu(menu, inflater);
@@ -131,6 +151,7 @@ private boolean mSubtitleVisible;
 
         }
         updateSubtitle();
+        updateEmptyView();
     }
     private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener { //essential component of a recycler, holds and specifies a view
 
