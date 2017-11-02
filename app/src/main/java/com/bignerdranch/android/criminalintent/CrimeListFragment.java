@@ -145,6 +145,7 @@ private boolean mSubtitleVisible;
             mCrimeRecyclerView.setAdapter(mAdapter);
         }
         else{
+           mAdapter.setCrimes(crimes);
             mAdapter.notifyDataSetChanged();
             mAdapter = new CrimeAdapter(crimes);
             mCrimeRecyclerView.swapAdapter(mAdapter, false);
@@ -222,6 +223,9 @@ private boolean mSubtitleVisible;
         }
 
         public CrimeAdapter(List<Crime> crimes){
+            mCrimes=crimes;
+        }
+        public void setCrimes(List<Crime> crimes){
             mCrimes=crimes;
         }
     @Override

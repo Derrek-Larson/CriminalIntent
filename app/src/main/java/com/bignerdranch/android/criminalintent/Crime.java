@@ -12,6 +12,28 @@ public class Crime {
     private Boolean mSolved=false;
     private Boolean mRequiresPolice = false;
     private String mTime;
+    private int mSuspectId;
+    private String mSuspect;
+    public int getSuspectId() {
+        return mSuspectId;
+    }
+
+    public void setSuspectId(int suspectId) {
+        mSuspectId = suspectId;
+    }
+
+    public String getSuspect() {
+        return mSuspect;
+    }
+
+    public String getPhotoFilename(){
+        return ("IMG_"+getId().toString()+".jpg");
+    }
+
+    public void setSuspect(String suspect) {
+        mSuspect = suspect;
+    }
+
     public Boolean getMrequiresPolice() {
         return mRequiresPolice;
     }
@@ -38,10 +60,12 @@ public class Crime {
     }
 
     public Crime() {
-        mId = UUID.randomUUID();
+        this(UUID.randomUUID());
+    }
+    public Crime(UUID id){
+        mId = id;
         mDate = new Date();
     }
-
     public void setTitle(String title) {
         mTitle = title;
     }

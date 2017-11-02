@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TimePicker;
@@ -22,6 +23,7 @@ import java.util.GregorianCalendar;
 public class TimePickerFragment extends DialogFragment {
     public static final String EXTRA_TIME = "timeExtraData";
     private static final String ARG_DATE = "date";
+    private static final String TAG = "logTag";
     private TimePicker mTimePicker;
     private Calendar mCalendar;
     public static TimePickerFragment newInstance(Date date) {
@@ -47,6 +49,7 @@ public class TimePickerFragment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which){
                         Date date1 = (Date) getArguments().getSerializable(ARG_DATE); // instance date of current date
+                        Log.d(TAG, "date value is "+ date1.toString());
                         mCalendar = Calendar.getInstance();
                         mCalendar.setTime(date1); // calendar of current date
                         int year = mCalendar.get(Calendar.YEAR);
@@ -55,6 +58,7 @@ public class TimePickerFragment extends DialogFragment {
                         int hour = mTimePicker.getCurrentHour();
                         int minute = mTimePicker.getCurrentMinute(); // extract current selected time values
                         Date date = new GregorianCalendar(year,month, day,hour,minute).getTime(); //put em together
+                        Log.d(TAG, "date value is "+ date.toString());
                         sendResult(Activity.RESULT_OK, date); //send it off to method sendResult
                     }
                 })
