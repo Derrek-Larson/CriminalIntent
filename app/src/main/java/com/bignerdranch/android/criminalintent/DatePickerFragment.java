@@ -26,7 +26,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
- * Created by derrek1 on 10/16/17.
+ * Derrek Larson
  */
 
 public class DatePickerFragment extends DialogFragment {
@@ -38,6 +38,7 @@ public class DatePickerFragment extends DialogFragment {
     DatePicker mDatePicker;
     private Button mPositiveButton;
     private Button mNegativeButton;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

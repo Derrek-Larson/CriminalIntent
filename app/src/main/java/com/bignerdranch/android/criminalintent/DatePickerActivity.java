@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import java.util.Date;
 /**
- * DatePickerActivity hosts a date picker. This is for the second challenge.
+ * Derrek Larson, used only for chapter 12 hard challenge
  */
 public class DatePickerActivity extends SingleFragmentActivity {
     private static final String EXTRA_DATE =
